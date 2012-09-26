@@ -36,7 +36,6 @@ describe "Ideas" do
       json['name'].should == 'Hmm Pizza'
       json['description'].should == "I'm getting hungry. We should have some."
     end
-  end
 
   it "gets rid of a bad idea" do
     eddible_shoes = Idea.create!(name: 'Eddible shoes', description: 'Yum!')
