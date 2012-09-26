@@ -38,13 +38,14 @@ describe "Ideas" do
   it "gets rid of a bad idea" do
     eddible_shoes = Idea.create!(name: 'Eddible shoes', description: 'Yum!')
     delete idea_api_uri(eddible_shoes)
-    get idea_api_uri(eddible_shoes)
-    response.status.should == 404
+    response.status.should == 204
+    get ideas_api_uri
+    json.should be_empty
   end
 
   it "adds a great new idea" do
     post ideas_api_uri, idea: {name: 'Hats', description: 'Need more'}
-    response.status.should == 200
+    response.status.should == 201
     get ideas_api_uri
     json.last['name'].should == 'Hats'
   end
