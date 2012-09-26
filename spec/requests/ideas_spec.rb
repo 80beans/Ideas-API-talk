@@ -1,0 +1,59 @@
+require 'spec_helper'
+
+def ideas_api_uri
+  '/api/v1/ideas'
+end
+
+def idea_api_uri(idea)
+  ideas_api_uri + '/' + idea.to_param
+end
+
+describe "Ideas" do
+  before do
+    @stickers = Idea.create!(
+      name: 'Stickers are awesome',
+      description: 'Put more stickers on my laptop'
+    )
+    @pizza = Idea.create!(
+      name: 'Hmm Pizza',
+      description: "I'm getting hungry. We should have some."
+    )
+  end
+  let(:json) { JSON.parse(response.body) }
+  after { Idea.destroy_all }
+
+  it "fetches all the ideas" do
+    get ideas_api_uri
+    json.length.should == 2
+    json.first['name'].should == 'Stickers are awesome'
+    json.second['name'].should == 'Hmm Pizza'
+  end
+
+  it "fetches the data of the pizza idea" do
+    get idea_api_uri(@pizza)
+    json['name'].should == 'Hmm Pizza'
+    json['description'].should == "I'm getting hungry. We should have some."
+  end
+
+  it "gets rid of a bad idea" do
+    eddible_shoes = Idea.create!(name: 'Eddible shoes', description: 'Yum!')
+    delete idea_api_uri(eddible_shoes)
+    get idea_api_uri(eddible_shoes)
+    response.status.should == 404
+  end
+
+  it "adds a great new idea" do
+    post ideas_api_uri, idea: {name: 'Hats', description: 'Need more'}
+    response.status.should == 200
+    get ideas_api_uri
+    json.last['name'].should == 'Hats'
+  end
+
+  it "makes an existing idea even better" do
+    beer = Idea.create!(name: 'Beer', description: 'Have one')
+    put idea_api_uri(beer), idea: {description: 'Have a few'}
+    get idea_api_uri(beer)
+    json['name'].should == 'Beer'
+    json['description'].should == 'Have a few'
+  end
+end
