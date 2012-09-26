@@ -1,4 +1,10 @@
 Ideas::Application.routes.draw do
+  scope path: :api do
+    scope path: :v1 do
+      resources :ideas, defaults: {format: :json }
+    end
+  end
+
   resources :ideas
 
   # The priority is based upon order of creation:
