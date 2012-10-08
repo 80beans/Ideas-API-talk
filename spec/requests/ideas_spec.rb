@@ -1,16 +1,23 @@
 require 'spec_helper'
 
 def ideas_api_uri
-  '/api/v1/ideas'
+  "/api/v1/ideas?auth_token=#{@user.authentication_token}"
 end
 
 def idea_api_uri(idea)
-  ideas_api_uri + '/' + idea.to_param
+  "/api/v1/ideas/#{idea.to_param}?auth_token=#{@user.authentication_token}"
 end
 
 describe "Ideas" do
   let(:json) { JSON.parse(response.body) }
   after { Idea.destroy_all }
+  before(:all) do
+    @user = User.create!(
+      :email => 'test@example.com',
+      :password => 'secret',
+      :password_confirmation => 'secret'
+    )
+  end
 
   context "given some ideas" do
     before do
