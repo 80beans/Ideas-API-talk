@@ -9,30 +9,33 @@ def idea_api_uri(idea)
 end
 
 describe "Ideas" do
-  before do
-    @stickers = Idea.create!(
-      name: 'Stickers are awesome',
-      description: 'Put more stickers on my laptop'
-    )
-    @pizza = Idea.create!(
-      name: 'Hmm Pizza',
-      description: "I'm getting hungry. We should have some."
-    )
-  end
   let(:json) { JSON.parse(response.body) }
   after { Idea.destroy_all }
 
-  it "fetches all the ideas" do
-    get ideas_api_uri
-    json.length.should == 2
-    json.first['name'].should == 'Stickers are awesome'
-    json.second['name'].should == 'Hmm Pizza'
-  end
+  context "given some ideas" do
+    before do
+      @stickers = Idea.create!(
+        name: 'Stickers are awesome',
+        description: 'Put more stickers on my laptop'
+      )
+      @pizza = Idea.create!(
+        name: 'Hmm Pizza',
+        description: "I'm getting hungry. We should have some."
+      )
+    end
 
-  it "fetches the data of the pizza idea" do
-    get idea_api_uri(@pizza)
-    json['name'].should == 'Hmm Pizza'
-    json['description'].should == "I'm getting hungry. We should have some."
+    it "fetches all the ideas" do
+      get ideas_api_uri
+      json.length.should == 2
+      json.first['name'].should == 'Stickers are awesome'
+      json.second['name'].should == 'Hmm Pizza'
+    end
+
+    it "fetches the data of the pizza idea" do
+      get idea_api_uri(@pizza)
+      json['name'].should == 'Hmm Pizza'
+      json['description'].should == "I'm getting hungry. We should have some."
+    end
   end
 
   it "gets rid of a bad idea" do
