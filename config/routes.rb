@@ -1,4 +1,6 @@
 Ideas::Application.routes.draw do
+  devise_for :users
+
   scope path: :api do
     scope path: :v1 do
       resources :ideas, defaults: {format: :json }
