@@ -7,4 +7,4 @@ CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_pas
 CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version");
 INSERT INTO schema_migrations (version) VALUES ('20120926154551');
 
-INSERT INTO schema_migrations (version) VALUES ('20121008105339');
+INSERT INTO schema_migrations (version) VALUES ('20121008122954');

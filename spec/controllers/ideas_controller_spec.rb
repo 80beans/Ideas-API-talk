@@ -19,9 +19,12 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe IdeasController do
+  before(:all) do
+    User.destroy_all
+    @user = User.create!(:email => 't@example.com', :password => 'secret', :password_confirmation => 'secret')
+  end
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = User.create!(:email => 't@example.com', :password => 'secret', :password_confirmation => 'secret')
     sign_in @user
   end
 

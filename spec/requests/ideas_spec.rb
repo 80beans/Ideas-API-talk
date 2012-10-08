@@ -12,6 +12,7 @@ describe "Ideas" do
   let(:json) { JSON.parse(response.body) }
   after { Idea.destroy_all }
   before(:all) do
+    User.destroy_all
     @user = User.create!(
       :email => 'test@example.com',
       :password => 'secret',
