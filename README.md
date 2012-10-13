@@ -3,7 +3,7 @@
 Learn how to make a functional but simple API for your iOS app using Rails.
 We will cover creating a simple UI and a JSON based API using Test Driven Development practices
 and help you get started on your own machine.
-At the end of this session we will have deployed our first working app to Heroku.  
+At the end of this session we will have deployed our first working app to Heroku.
 We will be using:
 
 * TDD (Test Driven Development)
@@ -143,3 +143,13 @@ Now for something more in line with todays challenge:
       response.body.should == <INSERT THE JSON RESPONSE OF OUR DREAMS HERE>
     end
   end
+
+## Deploying to Heroku
+
+[Sign up](https://api.heroku.com/signup) if you haven't already. Then run:
+
+    heroku create
+
+And follow the instructions. Once you have successfully pushed run:
+
+    heroku run rake db:migrate
