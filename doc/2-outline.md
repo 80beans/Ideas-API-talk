@@ -1,3 +1,3 @@
 # Outline
 
-:E
+:buffers
